@@ -30,4 +30,10 @@ public class Booking extends BaseModel {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH})
     private Review review; // Defined 1:1 relationship between booking and review.
 
+    @ManyToOne
+    private Driver driver; // Many side has a foreign key
+
+    @ManyToOne
+    private Passenger passenger;
+
 }
