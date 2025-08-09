@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class PassengerReview extends Review {
 
+    private Double passengerRating;
     private String passengerReviewComment;
 
 }
