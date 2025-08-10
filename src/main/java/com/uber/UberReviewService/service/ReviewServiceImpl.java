@@ -1,6 +1,7 @@
 package com.uber.UberReviewService.service;
 
 import com.uber.UberReviewService.model.Booking;
+import com.uber.UberReviewService.model.CustomDriver;
 import com.uber.UberReviewService.model.Driver;
 import com.uber.UberReviewService.repositories.BookingRepository;
 import com.uber.UberReviewService.repositories.DriverRepository;
@@ -54,15 +55,15 @@ public class ReviewServiceImpl implements ReviewService, CommandLineRunner {
 //            bookingRepo.delete(b.get());
 //        }
 
-        Optional<Driver> driver = driverRepository.rawFindByIdAndLicenseNumber(1L, "DL1212");
+        Optional<CustomDriver> driver = driverRepository.rawFindByIdAndLicenseNumber(1L, "DL1212");
 
         if (driver.isPresent()) {
             System.out.println(driver.get().getName());
-            List<Booking> b = driver.get().getBookings();
+//            List<Booking> b = driver.get().getBookings();
 
-            for (Booking booking : b) {
-                System.out.println(booking.getId());
-            }
+//            for (Booking booking : b) {
+//                System.out.println(booking.getId());
+//            }
 //            List<Booking> bookings = bookingRepo.findByDriverId(driver.get().getId());
 //            for (Booking booking : bookings) {
 //                System.out.println(booking.getBookingStatus());
