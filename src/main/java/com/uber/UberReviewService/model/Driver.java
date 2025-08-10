@@ -2,6 +2,7 @@ package com.uber.UberReviewService.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ public class Driver extends BaseModel {
     @Column(nullable = false, unique = true)
     private String licenseNumber;
 
-    @OneToMany(mappedBy = "driver")
-    private List<Booking> bookings = new ArrayList<>(); // One side doesn't get a foreign.
+    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY) // By default, the fetch mode is LAZY for ONE to MANY.
+    private List<Booking> bookings = new ArrayList<>(); // One side doesn't get a foreign key.
 
 }
