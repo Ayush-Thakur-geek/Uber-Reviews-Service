@@ -1,6 +1,7 @@
 package com.uber.UberReviewService.service;
 
 import com.uber.UberReviewService.model.Booking;
+import com.uber.UberReviewService.model.CustomDetails;
 import com.uber.UberReviewService.model.CustomDriver;
 import com.uber.UberReviewService.model.Driver;
 import com.uber.UberReviewService.repositories.BookingRepository;
@@ -9,6 +10,7 @@ import com.uber.UberReviewService.repositories.ReviewRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,12 +57,12 @@ public class ReviewServiceImpl implements ReviewService, CommandLineRunner {
 //            bookingRepo.delete(b.get());
 //        }
 
-        Optional<CustomDriver> driver = driverRepository.rawFindByIdAndLicenseNumber(1L, "DL1212");
-
-        if (driver.isPresent()) {
-            System.out.println(driver.get().getName());
+//        Optional<CustomDriver> driver = driverRepository.rawFindByIdAndLicenseNumber(1L, "DL1212");
+//
+//        if (driver.isPresent()) {
+//            System.out.println(driver.get().getName());
 //            List<Booking> b = driver.get().getBookings();
-
+//
 //            for (Booking booking : b) {
 //                System.out.println(booking.getId());
 //            }
@@ -68,6 +70,20 @@ public class ReviewServiceImpl implements ReviewService, CommandLineRunner {
 //            for (Booking booking : bookings) {
 //                System.out.println(booking.getBookingStatus());
 //            }
+//        }
+
+        Long[] dId = {1L, 2L, 3L};
+
+//        List<CustomDetails> details = driverRepository.rawFindBookingsByDriverIds(Arrays.asList(dId));
+//        for (CustomDetails detail : details) {
+//            System.out.println("driver id: " + detail.getId() + ", driver name: " + detail.getName() + ", booking id: " + detail.getBookingId() + ", total distance: " + detail.getTotalDistance());
+//        }
+        List<Driver> details = driverRepository.findAllWithBookings(Arrays.asList(dId));
+        for (Driver d : details) {
+            System.out.println(d.getName());
+            for (Booking b : d.getBookings()) {
+                System.out.println(b.getTotalDistance());
+            }
         }
     }
 }

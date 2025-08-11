@@ -1,11 +1,16 @@
 package com.uber.UberReviewService.repositories;
 
+import com.uber.UberReviewService.model.Booking;
+import com.uber.UberReviewService.model.CustomDetails;
 import com.uber.UberReviewService.model.CustomDriver;
 import com.uber.UberReviewService.model.Driver;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -107,4 +112,21 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     @Query("FROM Driver as d WHERE d.id = :id AND d.licenseNumber = :ln") // hibernate query, where error is thrown at compile time.
     Optional<CustomDriver> rawFindByIdAndLicenseNumber(Long id, String ln);
 
+    @Query("""
+        SELECT d.id AS id,
+               d.name AS name,
+               b.id AS bookingId,
+               b.totalDistance AS totalDistance
+        FROM Driver d
+        LEFT JOIN d.bookings b
+        WHERE d.id IN :ids
+    """
+    )
+    List<CustomDetails> rawFindBookingsByDriverIds(@Param("ids") List<Long> ids);
+
+    // OR
+
+    @EntityGraph(attributePaths = "bookings") // Makes Fetch type EAGER for this particular query
+    @Query("SELECT d FROM Driver d WHERE d.id IN :ids")
+    List<Driver> findAllWithBookings(@Param("ids") List<Long> ids);
 }
