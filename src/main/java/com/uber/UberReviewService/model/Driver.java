@@ -31,7 +31,7 @@ public class Driver extends BaseModel {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY) // By default, the fetch mode is LAZY for ONE to MANY.
-    @Fetch(FetchMode.SUBSELECT)
+    @Fetch(FetchMode.SUBSELECT) // But remember to annotate the service method with @Transactional
     private List<Booking> bookings = new ArrayList<>(); // One side doesn't get a foreign key.
 
 }
