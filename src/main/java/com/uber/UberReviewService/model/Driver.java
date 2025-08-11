@@ -27,6 +27,9 @@ public class Driver extends BaseModel {
     @Column(nullable = false, unique = true)
     private String licenseNumber;
 
+    @Column(nullable = false, unique = true)
+    private String phoneNumber;
+
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY) // By default, the fetch mode is LAZY for ONE to MANY.
     @Fetch(FetchMode.SUBSELECT)
     private List<Booking> bookings = new ArrayList<>(); // One side doesn't get a foreign key.

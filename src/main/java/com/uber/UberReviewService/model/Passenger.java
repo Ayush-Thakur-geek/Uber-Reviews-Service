@@ -21,6 +21,9 @@ public class Passenger extends BaseModel {
     @Column(nullable = false)
     private String name;
 
+    @Column(unique = true)
+    private String phoneNumber;
+
     @OneToMany(mappedBy = "passenger")
     private List<Booking> bookings = new ArrayList<>();
 }
