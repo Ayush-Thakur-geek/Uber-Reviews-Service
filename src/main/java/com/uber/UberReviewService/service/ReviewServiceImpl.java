@@ -9,6 +9,7 @@ import com.uber.UberReviewService.repositories.DriverRepository;
 import com.uber.UberReviewService.repositories.ReviewRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +29,7 @@ public class ReviewServiceImpl implements ReviewService, CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
 
 //        Review review = Review.builder()
@@ -78,12 +80,20 @@ public class ReviewServiceImpl implements ReviewService, CommandLineRunner {
 //        for (CustomDetails detail : details) {
 //            System.out.println("driver id: " + detail.getId() + ", driver name: " + detail.getName() + ", booking id: " + detail.getBookingId() + ", total distance: " + detail.getTotalDistance());
 //        }
-        List<Driver> details = driverRepository.findAllWithBookings(Arrays.asList(dId));
-        for (Driver d : details) {
-            System.out.println(d.getName());
-            for (Booking b : d.getBookings()) {
-                System.out.println(b.getTotalDistance());
-            }
+//        List<Driver> details = driverRepository.findAllWithBookings(Arrays.asList(dId));
+//        for (Driver d : details) {
+//            System.out.println(d.getName());
+//            for (Booking b : d.getBookings()) {
+//                System.out.println(b.getTotalDistance());
+//            }
+//        }
+
+        List<Driver> drivers = driverRepository.findAllByIdIn(Arrays.asList(dId));
+//        List<Booking> bookings = bookingRepo.findAllByDriverIn(drivers);
+
+        for (Driver driver : drivers) {
+            List<Booking> bookings = driver.getBookings();
+            bookings.forEach(booking -> System.out.println(booking.getId()));
         }
     }
 }

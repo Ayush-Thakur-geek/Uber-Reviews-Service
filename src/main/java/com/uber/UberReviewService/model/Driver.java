@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class Driver extends BaseModel {
     private String licenseNumber;
 
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY) // By default, the fetch mode is LAZY for ONE to MANY.
+    @Fetch(FetchMode.SUBSELECT)
     private List<Booking> bookings = new ArrayList<>(); // One side doesn't get a foreign key.
 
 }

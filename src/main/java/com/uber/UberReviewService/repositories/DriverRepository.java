@@ -129,4 +129,6 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     @EntityGraph(attributePaths = "bookings") // Makes Fetch type EAGER for this particular query
     @Query("SELECT d FROM Driver d WHERE d.id IN :ids")
     List<Driver> findAllWithBookings(@Param("ids") List<Long> ids);
+
+    List<Driver> findAllByIdIn(List<Long> ids);
 }
