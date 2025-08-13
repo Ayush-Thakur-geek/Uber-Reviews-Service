@@ -1,7 +1,10 @@
 package com.uber.UberReviewService.service;
 
+import com.uber.UberReviewService.dtos.CreateReviewDto;
+import com.uber.UberReviewService.model.Booking;
 import com.uber.UberReviewService.model.RatingCommentView;
 import com.uber.UberReviewService.model.Review;
+import com.uber.UberReviewService.repositories.BookingRepository;
 import com.uber.UberReviewService.repositories.ReviewRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -13,10 +16,12 @@ import java.util.Optional;
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
+    private final BookingRepository bookingRepository;
     private ReviewRepository reviewRepository;
 
-    ReviewServiceImpl(ReviewRepository reviewRepository) {
+    ReviewServiceImpl(ReviewRepository reviewRepository, BookingRepository bookingRepository) {
         this.reviewRepository = reviewRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     @Override
@@ -42,8 +47,11 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Long publishReview(Review request) {
-        Long id = reviewRepository.save(request).getId();
-        return id;
+        try {
+            return reviewRepository.save(request).getId();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

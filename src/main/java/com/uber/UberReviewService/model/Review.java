@@ -66,6 +66,10 @@ public class Review extends BaseModel {
     private Double rating;
     private String comment;
 
+    @OneToOne(cascade = {CascadeType.ALL}) // Default fetch mode for ONE to ONE is EAGER.
+    @JoinColumn(nullable = false)
+    private Booking booking; // Defined 1:1 relationship between booking and review.
+
     @Override
     public String toString() {
         return "Review [rating=" + rating + ", content=" + comment + "]" + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";

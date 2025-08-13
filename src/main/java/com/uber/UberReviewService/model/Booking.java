@@ -27,9 +27,6 @@ public class Booking extends BaseModel {
 
     private Double totalDistance;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH}) // Default fetch mode for ONE to ONE is EAGER.
-    private Review review; // Defined 1:1 relationship between booking and review.
-
     @ManyToOne // The Default fetch mode for MANY to ONE and MANY to MANY is EAGER.
     private Driver driver; // Many side has a foreign key
 

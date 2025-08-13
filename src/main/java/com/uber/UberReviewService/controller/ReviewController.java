@@ -1,6 +1,7 @@
 package com.uber.UberReviewService.controller;
 
-import com.uber.UberReviewService.model.Booking;
+import com.uber.UberReviewService.adapters.CreateReviewToReviewAdapter;
+import com.uber.UberReviewService.dtos.CreateReviewDto;
 import com.uber.UberReviewService.model.RatingCommentView;
 import com.uber.UberReviewService.model.Review;
 import com.uber.UberReviewService.service.ReviewService;
@@ -15,15 +16,21 @@ import java.util.List;
 @RequestMapping("/api/v1/reviews")
 public class ReviewController {
 
-    private ReviewService reviewService;
+    private final ReviewService reviewService;
+    private final CreateReviewToReviewAdapter createReviewToReviewAdapter;
 
-    public ReviewController(ReviewService reviewService) {
+    public ReviewController(ReviewService reviewService, CreateReviewToReviewAdapter createReviewToReviewAdapter) {
         this.reviewService = reviewService;
+        this.createReviewToReviewAdapter = createReviewToReviewAdapter;
     }
 
     @PostMapping
-    public ResponseEntity<Long> publishReview(@RequestBody Review request) {
-        return new ResponseEntity<>(this.reviewService.publishReview(request), HttpStatus.OK);
+    public ResponseEntity<Long> publishReview(@RequestBody CreateReviewDto request) {
+        Long id = reviewService.publishReview(createReviewToReviewAdapter.convertDto(request));
+        if (id == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     @GetMapping
