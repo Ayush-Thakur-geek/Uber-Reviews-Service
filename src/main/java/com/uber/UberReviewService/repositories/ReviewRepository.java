@@ -1,8 +1,10 @@
 package com.uber.UberReviewService.repositories;
 
 import com.uber.UberReviewService.model.CustomDriverPassengerReview;
+import com.uber.UberReviewService.model.RatingCommentView;
 import com.uber.UberReviewService.model.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -28,4 +30,17 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 """)
     CustomDriverPassengerReview findDriverPassengerReviewByBookingId(Long bookingId);
 
+    @Query("""
+       SELECT r.rating AS rating, r.comment AS comment
+       FROM Review r
+       """)
+    List<RatingCommentView> findRatingsAndComments();
+
+    @Modifying
+    @Query("""
+        UPDATE Review
+        SET rating = :rating, comment = :comment
+        WHERE id = :reviewId
+""")
+    void updateReviewById(Long reviewId, Double rating, String comment);
 }

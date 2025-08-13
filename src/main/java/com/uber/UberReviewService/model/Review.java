@@ -1,9 +1,6 @@
 package com.uber.UberReviewService.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -65,6 +62,7 @@ Inheritance in Jpa:
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Review extends BaseModel {
 
+    @Column(nullable = false)
     private Double rating;
     private String comment;
 

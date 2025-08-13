@@ -1,9 +1,11 @@
 package com.uber.UberReviewService.service;
 
+import com.uber.UberReviewService.model.RatingCommentView;
 import com.uber.UberReviewService.model.Review;
 import com.uber.UberReviewService.repositories.ReviewRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,5 +38,29 @@ public class ReviewServiceImpl implements ReviewService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Long publishReview(Review request) {
+        Long id = reviewRepository.save(request).getId();
+        return id;
+    }
+
+    @Override
+    public List<RatingCommentView> getAllReviews() {
+        List<RatingCommentView> list = reviewRepository.findRatingsAndComments();
+        return list;
+    }
+
+    @Override
+    public Review getReview(Long reviewId) {
+        Optional<Review> r = reviewRepository.findById(reviewId);
+        return r.orElse(null);
+    }
+
+    @Transactional
+    @Override
+    public void updateReview(Long revieiwId, Review request) {
+        reviewRepository.updateReviewById(revieiwId, request.getRating(), request.getComment());
     }
 }
