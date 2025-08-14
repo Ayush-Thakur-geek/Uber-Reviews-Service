@@ -2,6 +2,7 @@ package com.uber.UberReviewService.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,6 @@ public class Passenger extends BaseModel {
     @Column(unique = true)
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "passenger")
+    @OneToMany(mappedBy = "passenger", fetch = FetchType.LAZY)
     private List<Booking> bookings = new ArrayList<>();
 }

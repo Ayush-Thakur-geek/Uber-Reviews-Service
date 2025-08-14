@@ -46,9 +46,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Long publishReview(Review request) {
+    public Review publishReview(Review request) {
         try {
-            return reviewRepository.save(request).getId();
+            return reviewRepository.save(request);
         } catch (Exception e) {
             return null;
         }

@@ -1,5 +1,6 @@
 package com.uber.UberReviewService.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,13 +61,14 @@ Inheritance in Jpa:
 @AllArgsConstructor
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "booking"})
 public class Review extends BaseModel {
 
     @Column(nullable = false)
     private Double rating;
     private String comment;
 
-    @OneToOne(cascade = {CascadeType.ALL}) // Default fetch mode for ONE to ONE is EAGER.
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY) // Default fetch mode for ONE to ONE is EAGER.
     @JoinColumn(nullable = false)
     private Booking booking; // Defined 1:1 relationship between booking and review.
 

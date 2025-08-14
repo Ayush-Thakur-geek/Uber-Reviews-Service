@@ -27,10 +27,10 @@ public class Booking extends BaseModel {
 
     private Double totalDistance;
 
-    @ManyToOne // The Default fetch mode for MANY to ONE and MANY to MANY is EAGER.
+    @ManyToOne(fetch = FetchType.LAZY) // The Default fetch mode for MANY to ONE and MANY to MANY is EAGER.
     private Driver driver; // Many side has a foreign key
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Passenger passenger;
 
 }

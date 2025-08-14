@@ -14,7 +14,7 @@ public interface ReviewService {
 
     public boolean deleteReviewById(Long id);
 
-    public Long publishReview(Review request);
+    public Review publishReview(Review request);
 
     public List<RatingCommentView> getAllReviews();
 

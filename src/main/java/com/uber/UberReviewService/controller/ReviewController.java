@@ -25,12 +25,13 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> publishReview(@RequestBody CreateReviewDto request) {
-        Long id = reviewService.publishReview(createReviewToReviewAdapter.convertDto(request));
-        if (id == null) {
+    public ResponseEntity<Review> publishReview(@RequestBody CreateReviewDto request) {
+        Review review = reviewService.publishReview(createReviewToReviewAdapter.convertDto(request));
+        if (review == null) {
+            System.out.println("Null");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(id, HttpStatus.CREATED);
+        return new ResponseEntity<>(review, HttpStatus.CREATED);
     }
 
     @GetMapping
