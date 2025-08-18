@@ -2,6 +2,7 @@ package com.uber.UberReviewService.controller;
 
 import com.uber.UberReviewService.adapters.CreateReviewToReviewAdapter;
 import com.uber.UberReviewService.dtos.CreateReviewDto;
+import com.uber.UberReviewService.dtos.ReviewDto;
 import com.uber.UberReviewService.model.RatingCommentView;
 import com.uber.UberReviewService.model.Review;
 import com.uber.UberReviewService.service.ReviewService;
@@ -25,13 +26,21 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<Review> publishReview(@RequestBody CreateReviewDto request) {
+    public ResponseEntity<ReviewDto> publishReview(@RequestBody CreateReviewDto request) {
         Review review = reviewService.publishReview(createReviewToReviewAdapter.convertDto(request));
         if (review == null) {
             System.out.println("Null");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(review, HttpStatus.CREATED);
+        ReviewDto rDto = ReviewDto.builder()
+                .reviewId(review.getId())
+                .rating(review.getRating())
+                .comment(review.getComment())
+                .createdAt(review.getCreatedAt())
+                .updatedAt(review.getUpdatedAt())
+                .build();
+
+        return new ResponseEntity<>(rDto, HttpStatus.CREATED);
     }
 
     @GetMapping

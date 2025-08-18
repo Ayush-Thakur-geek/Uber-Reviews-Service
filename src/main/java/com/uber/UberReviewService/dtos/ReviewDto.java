@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class ReviewDto {
-    private int reviewId;
+    private Long reviewId;
     private Date createdAt;
     private Date updatedAt;
     private Double rating;

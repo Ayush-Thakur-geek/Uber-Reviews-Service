@@ -22,8 +22,14 @@ public class Passenger extends BaseModel {
     @Column(nullable = false)
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String phoneNumber;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
 
     @OneToMany(mappedBy = "passenger", fetch = FetchType.LAZY)
     private List<Booking> bookings = new ArrayList<>();
