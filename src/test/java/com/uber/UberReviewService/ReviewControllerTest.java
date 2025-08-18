@@ -5,6 +5,7 @@ import com.uber.UberReviewService.controller.ReviewController;
 import com.uber.UberReviewService.dtos.CreateReviewDto;
 import com.uber.UberReviewService.dtos.ReviewDto;
 import com.uber.UberReviewService.model.Booking;
+import com.uber.UberReviewService.model.RatingCommentView;
 import com.uber.UberReviewService.model.Review;
 import com.uber.UberReviewService.service.ReviewService;
 import org.junit.jupiter.api.AfterEach;
@@ -17,9 +18,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 
 public class ReviewControllerTest {
 
@@ -87,6 +91,130 @@ public class ReviewControllerTest {
         ReviewDto returnedReview = (ReviewDto) response.getBody();
         assertNotNull(returnedReview);
         assertEquals(reviewId, returnedReview.getReviewId());
+    }
+
+    @Test
+    public void testUpdateReview_Success() {
+        Long reviewId = 1L;
+        Review request = Review.builder()
+                .rating(4.0)
+                .comment("Test update review api")
+                .build();
+        request.setId(reviewId);
+
+        // Mock void method
+        doNothing().when(reviewService).updateReview(reviewId, request);
+
+        // Call controller directly
+        ResponseEntity<?> response = reviewController.updateReview(reviewId, request);
+
+        // Assertions
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Review updated", response.getBody());
+
+        // Verify
+        verify(reviewService, times(1)).updateReview(reviewId, request);
+    }
+
+    @Test
+    public void testGetAllReview_Success() {
+        RatingCommentView rc = new RatingCommentView() {
+            @Override
+            public Double getRating() {
+                return 4.0;
+            }
+
+            @Override
+            public String getComment() {
+                return "Testing getAllReview api";
+            }
+        };
+
+        List<RatingCommentView> rcList = new ArrayList<>();
+        rcList.add(rc);
+        when(reviewService.getAllReviews()).thenReturn(rcList);
+        ResponseEntity<?> response = reviewController.getAllReviews();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        List<RatingCommentView> returnedList = (List<RatingCommentView>) response.getBody();
+        assertNotNull(returnedList);
+        assertEquals(rcList, returnedList);
+    }
+
+    @Test
+    void testGetAllReviews_Failure() {
+        // Arrange: mock the service to throw an exception
+        when(reviewService.getAllReviews()).thenThrow(new RuntimeException("Database error"));
+
+        // Act
+        ResponseEntity<List<?>> response = reviewController.getAllReviews();
+
+        // Assert
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertTrue(response.getBody().get(0).toString().contains("Database error"));
+
+        // Verify interaction
+        verify(reviewService, times(1)).getAllReviews();
+    }
+
+    @Test
+    public void testUpdateReview_Failure() {
+        Long reviewId = 1L;
+        Review request = Review.builder()
+                .rating(4.0)
+                .comment("Test update review api")
+                .build();
+        request.setId(reviewId);
+
+        // Mock void method
+        doThrow(new RuntimeException("Update failed"))
+                .when(reviewService).updateReview(reviewId, request);
+
+        ResponseEntity<?> response = reviewController.updateReview(reviewId, request);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Update failed", response.getBody());
+
+        // Verify
+        verify(reviewService, times(1)).updateReview(reviewId, request);
+    }
+
+    @Test
+    public void testGetReview_Failure() {
+        long reviewId = 1L;
+
+        //mocking
+        when(reviewService.getReview(reviewId)).thenReturn(null);
+
+        //perform the test
+        ResponseEntity<?> response = reviewController.getReview(reviewId);
+
+        //assertions
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        Review returnedReview = (Review) response.getBody();
+        assertNull(returnedReview);
+    }
+
+    @Test
+    public void testPublishReview_Failure() {
+        Long reviewId = 1L;
+        Long bookingId = 1L;
+        CreateReviewDto requestDto = new CreateReviewDto();
+        Booking booking = Booking.builder().build();
+        booking.setId(bookingId);
+        Review incomingReview = Review.builder()
+                .rating(4.0)
+                .comment("Test publish review api")
+                .booking(booking)
+                .build();
+        incomingReview.setId(reviewId);
+
+        when(createReviewDtoToReviewAdapter.convertDto(requestDto)).thenReturn(incomingReview);
+        when(reviewService.publishReview(incomingReview)).thenReturn(null);
+
+        ResponseEntity<?> response = reviewController.publishReview(requestDto);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        ReviewDto returnedReview = (ReviewDto) response.getBody();
+        assertNull(returnedReview);
     }
 
 }

@@ -55,12 +55,11 @@ public class ReviewController {
 
     @GetMapping("/{reviewId}")
     public ResponseEntity<?> getReview(@PathVariable Long reviewId) {
-        try {
-            Review r = this.reviewService.getReview(reviewId);
-            return new ResponseEntity<>(r, HttpStatus.OK);
-        } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        Review r = this.reviewService.getReview(reviewId);
+        if  (r == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(r, HttpStatus.OK);
     }
 
     @PutMapping("/update/{reviewId}")
@@ -68,7 +67,7 @@ public class ReviewController {
         try {
             reviewService.updateReview(reviewId, request);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("Review updated", HttpStatus.OK);
     }
