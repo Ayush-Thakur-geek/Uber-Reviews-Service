@@ -17,17 +17,11 @@ import java.util.Optional;
 public class ReviewServiceImpl implements ReviewService {
 
     private final BookingRepository bookingRepository;
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
     ReviewServiceImpl(ReviewRepository reviewRepository, BookingRepository bookingRepository) {
         this.reviewRepository = reviewRepository;
         this.bookingRepository = bookingRepository;
-    }
-
-    @Override
-    public Review findReviewById(Long id) {
-        Optional<Review> review = reviewRepository.findById(id);
-        return review.orElse(null);
     }
 
     @Override
@@ -56,8 +50,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<RatingCommentView> getAllReviews() {
-        List<RatingCommentView> list = reviewRepository.findRatingsAndComments();
-        return list;
+        return reviewRepository.findRatingsAndComments();
     }
 
     @Override
@@ -68,7 +61,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Transactional
     @Override
-    public void updateReview(Long revieiwId, Review request) {
-        reviewRepository.updateReviewById(revieiwId, request.getRating(), request.getComment());
+    public void updateReview(Long reviewId, Review request) {
+        reviewRepository.updateReviewById(reviewId, request.getRating(), request.getComment());
     }
 }

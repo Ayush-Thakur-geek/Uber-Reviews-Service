@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class CreateReviewToReviewAdapterImpl implements CreateReviewToReviewAdapter {
+public class CreateReviewDtoToReviewAdapterImpl implements CreateReviewDtoToReviewAdapter {
 
     private final BookingRepository bookingRepository;
 
-    public CreateReviewToReviewAdapterImpl(BookingRepository bookingRepository) {
+    public CreateReviewDtoToReviewAdapterImpl(BookingRepository bookingRepository) {
         this.bookingRepository = bookingRepository;
     }
 

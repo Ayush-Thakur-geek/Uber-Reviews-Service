@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface ReviewService {
 
-    public Review findReviewById(Long id);
-
     public List<Review> findAllReviews();
 
     public boolean deleteReviewById(Long id);
@@ -20,5 +18,5 @@ public interface ReviewService {
 
     public Review getReview(Long reviewId);
 
-    public void updateReview(Long revieiwId, Review request);
+    public void updateReview(Long reviewId, Review request);
 }

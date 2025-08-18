@@ -1,6 +1,6 @@
 package com.uber.UberReviewService.controller;
 
-import com.uber.UberReviewService.adapters.CreateReviewToReviewAdapter;
+import com.uber.UberReviewService.adapters.CreateReviewDtoToReviewAdapter;
 import com.uber.UberReviewService.dtos.CreateReviewDto;
 import com.uber.UberReviewService.dtos.ReviewDto;
 import com.uber.UberReviewService.model.RatingCommentView;
@@ -18,16 +18,16 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewService reviewService;
-    private final CreateReviewToReviewAdapter createReviewToReviewAdapter;
+    private final CreateReviewDtoToReviewAdapter createReviewDtoToReviewAdapter;
 
-    public ReviewController(ReviewService reviewService, CreateReviewToReviewAdapter createReviewToReviewAdapter) {
+    public ReviewController(ReviewService reviewService, CreateReviewDtoToReviewAdapter createReviewDtoToReviewAdapter) {
         this.reviewService = reviewService;
-        this.createReviewToReviewAdapter = createReviewToReviewAdapter;
+        this.createReviewDtoToReviewAdapter = createReviewDtoToReviewAdapter;
     }
 
     @PostMapping
     public ResponseEntity<ReviewDto> publishReview(@RequestBody CreateReviewDto request) {
-        Review review = reviewService.publishReview(createReviewToReviewAdapter.convertDto(request));
+        Review review = reviewService.publishReview(createReviewDtoToReviewAdapter.convertDto(request));
         if (review == null) {
             System.out.println("Null");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
