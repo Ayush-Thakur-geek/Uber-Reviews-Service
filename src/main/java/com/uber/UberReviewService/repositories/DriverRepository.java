@@ -1,9 +1,8 @@
 package com.uber.UberReviewService.repositories;
 
-import com.uber.UberReviewService.model.Booking;
-import com.uber.UberReviewService.model.CustomDetails;
-import com.uber.UberReviewService.model.CustomDriver;
-import com.uber.UberReviewService.model.Driver;
+import com.uber.UberReviewService.models.CustomDetails;
+import com.uber.UberReviewService.models.CustomDriver;
+import com.uber.UberEntityService.models.Driver;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

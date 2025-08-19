@@ -1,8 +1,7 @@
-package com.uber.UberReviewService.service;
+package com.uber.UberReviewService.services;
 
-import com.uber.UberReviewService.dtos.CreateReviewDto;
-import com.uber.UberReviewService.model.RatingCommentView;
-import com.uber.UberReviewService.model.Review;
+import com.uber.UberReviewService.models.RatingCommentView;
+import com.uber.UberEntityService.models.Review;
 
 import java.util.List;
 

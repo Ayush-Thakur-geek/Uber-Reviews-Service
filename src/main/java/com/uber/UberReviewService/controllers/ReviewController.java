@@ -1,13 +1,13 @@
-package com.uber.UberReviewService.controller;
+package com.uber.UberReviewService.controllers;
 
 import com.uber.UberReviewService.adapters.CreateReviewDtoToReviewAdapter;
 import com.uber.UberReviewService.dtos.CreateReviewDto;
 import com.uber.UberReviewService.dtos.ReviewDto;
-import com.uber.UberReviewService.model.RatingCommentView;
-import com.uber.UberReviewService.model.Review;
-import com.uber.UberReviewService.service.ReviewService;
-import jakarta.persistence.EntityNotFoundException;
+import com.uber.UberReviewService.models.RatingCommentView;
+import com.uber.UberEntityService.models.Review;
+import com.uber.UberReviewService.services.ReviewService;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

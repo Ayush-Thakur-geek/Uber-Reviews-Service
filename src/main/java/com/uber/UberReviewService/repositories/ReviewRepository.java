@@ -1,8 +1,7 @@
 package com.uber.UberReviewService.repositories;
 
-import com.uber.UberReviewService.model.CustomDriverPassengerReview;
-import com.uber.UberReviewService.model.RatingCommentView;
-import com.uber.UberReviewService.model.Review;
+import com.uber.UberReviewService.models.RatingCommentView;
+import com.uber.UberEntityService.models.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

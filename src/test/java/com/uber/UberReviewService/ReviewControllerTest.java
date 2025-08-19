@@ -1,13 +1,13 @@
 package com.uber.UberReviewService;
 
 import com.uber.UberReviewService.adapters.CreateReviewDtoToReviewAdapter;
-import com.uber.UberReviewService.controller.ReviewController;
+import com.uber.UberReviewService.controllers.ReviewController;
 import com.uber.UberReviewService.dtos.CreateReviewDto;
 import com.uber.UberReviewService.dtos.ReviewDto;
-import com.uber.UberReviewService.model.Booking;
-import com.uber.UberReviewService.model.RatingCommentView;
-import com.uber.UberReviewService.model.Review;
-import com.uber.UberReviewService.service.ReviewService;
+import com.uber.UberEntityService.models.Booking;
+import com.uber.UberReviewService.models.RatingCommentView;
+import com.uber.UberEntityService.models.Review;
+import com.uber.UberReviewService.services.ReviewService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

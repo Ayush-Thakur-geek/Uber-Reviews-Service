@@ -5,7 +5,7 @@ import lombok.*;
 import java.io.Serializable;
 
 /**
- * DTO for {@link com.uber.UberReviewService.model.Review}
+ * DTO for {@link com.uber.UberEntityService.models.Review}
  */
 //@Value
 @Data

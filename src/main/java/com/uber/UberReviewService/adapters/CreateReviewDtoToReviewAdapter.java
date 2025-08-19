@@ -1,7 +1,7 @@
 package com.uber.UberReviewService.adapters;
 
 import com.uber.UberReviewService.dtos.CreateReviewDto;
-import com.uber.UberReviewService.model.Review;
+import com.uber.UberEntityService.models.Review;
 
 public interface CreateReviewDtoToReviewAdapter {
 

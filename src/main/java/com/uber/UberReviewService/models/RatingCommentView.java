@@ -1,4 +1,4 @@
-package com.uber.UberReviewService.model;
+package com.uber.UberReviewService.models;
 
 public interface RatingCommentView {
     Double getRating();
