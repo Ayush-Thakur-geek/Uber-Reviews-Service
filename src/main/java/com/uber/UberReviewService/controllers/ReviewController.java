@@ -27,6 +27,7 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<ReviewDto> publishReview(@RequestBody CreateReviewDto request) {
+        System.out.println("Publishing Review");
         Review review = reviewService.publishReview(createReviewDtoToReviewAdapter.convertDto(request));
         if (review == null) {
             System.out.println("Null");
