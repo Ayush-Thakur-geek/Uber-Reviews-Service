@@ -27,6 +27,7 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<ReviewDto> publishReview(@RequestBody CreateReviewDto request) {
+        System.out.println("Publishing Review...");
         Review review = reviewService.publishReview(createReviewDtoToReviewAdapter.convertDto(request));
         if (review == null) {
             System.out.println("Null");
@@ -55,6 +56,7 @@ public class ReviewController {
 
     @GetMapping("/{reviewId}")
     public ResponseEntity<?> getReview(@PathVariable Long reviewId) {
+        System.out.println("Getting review with id " + reviewId);
         Review r = this.reviewService.getReview(reviewId);
         if  (r == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
