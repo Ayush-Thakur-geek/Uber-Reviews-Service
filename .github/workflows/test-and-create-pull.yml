@@ -30,6 +30,9 @@ jobs:
           chmod +x ./gradlew
           ./gradlew publishToMavenLocal --no-daemon
 
+      - name: Make wrapper executable
+        run: chmod +x ./gradlew
+
       - name: Run tests and build fat jar
         run: ./gradlew build --no-daemon
 
