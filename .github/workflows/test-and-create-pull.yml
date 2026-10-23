@@ -18,8 +18,17 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Make wrapper executable
-        run: chmod +x ./gradlew
+      - name: Checkout UberEntityService
+        uses: actions/checkout@v4
+        with:
+          repository: Ayush-Thakur-geek/Uber-Entity-Service
+          path: UberEntityService
+
+      - name: Publish UberEntityService to Maven local
+        working-directory: UberEntityService
+        run: |
+          chmod +x ./gradlew
+          ./gradlew publishToMavenLocal --no-daemon
 
       - name: Run tests and build fat jar
         run: ./gradlew build --no-daemon
